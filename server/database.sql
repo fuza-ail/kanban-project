@@ -11,6 +11,7 @@ CREATE TABLE "users" (
 CREATE TABLE "boards" (
   "id" int SERIAL PRIMARY KEY,
   "name" varchar(100) NOT NULL,
+  "owner_id" int NOT NULL,
   "description" text,
   "created_at" timestamp DEFAULT CURRENT_TIMESTAMP,
   "updated_at" timestamp DEFAULT CURRENT_TIMESTAMP
