@@ -1,0 +1,47 @@
+.authContainer{
+  width: 24rem;
+  border: 1px solid rgba(153, 153, 153, 0.534);
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color:white;
+  border-radius: 0.4rem;
+  box-shadow: 1px 1px 1px rgba(156, 156, 156, 0.397);
+}
+
+.authContainer h2{
+  margin-bottom:2rem;
+}
+
+form{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+form button{
+  margin-top: 1rem;
+  margin-bottom: 0.6rem;
+}
+
+.toRegister,
+.toLogin{
+  cursor: pointer;
+}
+
+.toRegister:hover,
+.toLogin:hover{
+  text-decoration: underline;
+}
+
+@media only screen and (max-width: 600px){
+  .authContainer{
+    width: 16rem;
+  }
+
+  .authContainer h2{
+    margin-bottom:1rem;
+  }
+}

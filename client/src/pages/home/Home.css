@@ -1,0 +1,78 @@
+.home{
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--primary-bg-color);
+}
+
+.home-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 80rem;
+  padding: 1rem;
+}
+
+.home-container h1{
+  color: var(--primary-font-color);
+  margin-bottom: 0.5rem;
+  font-size:4rem;
+}
+
+.home-container h2{
+  color: var(--secondary-font-color);
+  font-size: 1.6rem;
+  font-weight:400;
+}
+
+.home-container a{
+  font-size: 1.4rem;
+}
+
+.home-container button{
+  margin-top: 3rem;
+  background-color: var(--tertiary-bg-color);
+  border-color: var(--tertiary-bg-color);
+}
+
+.home-container button:hover,
+.home-container button:active,
+.home-container button:focus{
+  background-color: var(--primary-bg-color);
+  border-color: var(--tertiary-bg-color);
+  color: var(--tertiary-bg-color);
+}
+
+@media only screen and (max-width: 900px) {
+  .home-container h1{
+    font-size: 3rem;
+  }
+
+  .home-container h2{
+    font-size: 1.4rem;
+  }
+
+  .home-container a{
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .home-container h1{
+    font-size: 1.6rem;
+  }
+
+  .home-container h2{
+    font-size: 1rem;
+  }
+
+  .home-container a{
+    font-size: 1rem;
+  }
+
+  .home-container button{
+    margin-top: 1rem;
+  }
+}
