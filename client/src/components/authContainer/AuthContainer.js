@@ -1,18 +1,57 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, message } from "antd";
+import axios from "axios";
+
+import { AuthContext } from "../../auth/auth";
+import { baseUrl } from "../../constants/url";
 
 import "./AuthContainer.css";
 
 export default function AuthContainer() {
   const [authType, setAuthType] = useState("login");
+  const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const {  setIsLogin } = useContext(AuthContext);
 
   function onSubmit(values) {
-    console.log(values);
-    navigate("/dashboard");
+    const { email, password } = values;
+    let url = "";
 
+    if (authType === "login") {
+      url = `${baseUrl}/login`;
+    }
+
+    if (authType === "register") {
+      url = `${baseUrl}/register`;
+    }
+
+    setIsLoading(true);
+    console.log(authType);
+
+    axios({
+      method: "post",
+      url,
+      data: {
+        email,
+        password
+      }
+    })
+      .then(res=>{
+        const { data } = res.data;
+
+        setIsLoading(false);
+        setIsLogin(true);
+        localStorage.setItem("access-token", data.access_token);
+        localStorage.setItem("email", data.email);
+        navigate("/dashboard");
+      }).catch(err=>{
+        const { data } = err.response;
+
+        setIsLoading(false);
+        message.error(data.message);
+      });
   }
 
   function onSubmitFailed() {
@@ -30,7 +69,7 @@ export default function AuthContainer() {
 
       <Form
         form={form}
-        autoComplete="off"
+        autoComplete="on"
         onFinish={onSubmit}
         onFinishFailed={onSubmitFailed}
       >
@@ -57,10 +96,10 @@ export default function AuthContainer() {
             },
           ]}
         >
-          <Input.Password placeholder="Password" />
+          <Input.Password placeholder="Password" autoComplete="on"/>
         </Form.Item>
 
-        <Button htmlType="submit" type="primary">{authType.toUpperCase()}</Button>
+        <Button loading={isLoading} htmlType="submit" type="primary">{authType.toUpperCase()}</Button>
       </Form>
 
       {

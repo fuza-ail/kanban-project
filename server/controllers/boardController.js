@@ -2,9 +2,9 @@ const pool = require("../config/db");
 
 class BoardController {
   static async getBoards(req, res, next) {
-    const { id } = req.user;
-    
     try {
+      const { id } = req.user;
+    
       const selectBoards = `
       SELECT 
       m.user_id as user_id,
@@ -25,7 +25,6 @@ class BoardController {
         data: boards.rows
       });
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }

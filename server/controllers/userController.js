@@ -70,6 +70,21 @@ class UserController {
       next(err);
     }
   }
+
+  static async authenticate( req, res, next) {
+    const token = req.headers.access_token;
+    const user = req.user;
+
+    if (user) {
+      res.status(200).json({
+        status: 200,
+        data: {
+          email: user.email,
+          access_token: token
+        }
+      });
+    }
+  }
 }
 
 module.exports = { UserController };

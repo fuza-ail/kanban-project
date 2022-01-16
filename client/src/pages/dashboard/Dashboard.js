@@ -1,8 +1,8 @@
 import React from "react";
-import { Button } from "antd";
-import { PlusOutlined, LogoutOutlined } from "@ant-design/icons";
 
 import BoardCard from "../../components/boardCard/BoardCard";
+import AddBoardModal from "../../components/addBoardForm/AddBoardModal";
+import Logout from "../../components/logout/Logout";
 
 import "./Dashboard.css";
 
@@ -18,21 +18,6 @@ export default function Dashboard() {
       description: "project percobaan",
       date: new Date().toISOString()
     },
-    {
-      title: "Project ketiga",
-      description: "project percobaan",
-      date: new Date().toISOString()
-    },
-    {
-      title: "Project keempat",
-      description: "project percobaan",
-      date: new Date().toISOString()
-    },
-    {
-      title: "Project ",
-      description: "project percobaan",
-      date: new Date().toISOString()
-    }
   ];
 
   return (
@@ -41,19 +26,10 @@ export default function Dashboard() {
         <div className="header">
           <div className="header-title">
             <h2>Your Boards</h2>
-            <Button 
-              type="primary" 
-              icon={<PlusOutlined />}
-              size="small" 
-            />
+            <AddBoardModal/>
           </div>
 
-          <Button 
-            type="danger"
-            icon={<LogoutOutlined />}
-          >
-            Logout
-          </Button>
+          <Logout />
         </div>
 
         <hr />

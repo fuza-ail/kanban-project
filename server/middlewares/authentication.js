@@ -18,24 +18,28 @@ function authenticate(req, res, next) {
       accessToken, 
       process.env.TOKEN_KEY, 
       async (err, decoded)=>{
-        if (err) {
-          throw {
-            status: 400,
-            message: "Access token invalid"
-          };
-        }
+        try {
+          if (err) {
+            throw {
+              status: 400,
+              message: "Access token invalid"
+            };
+          }
         
-        const user = await pool.query("SELECT id,email FROM users WHERE id = $1", [decoded.id]);
-        const userData = user.rows[0];
+          const user = await pool.query("SELECT id,email FROM users WHERE id = $1", [decoded.id]);
+          const userData = user.rows[0];
 
-        if (userData) {
-          req.user = decoded;
-          next();
-        } else {
-          throw {
-            status: 404,
-            message: "User not found"
-          };
+          if (userData) {
+            req.user = decoded;
+            next();
+          } else {
+            throw {
+              status: 404,
+              message: "User not found"
+            };
+          }
+        } catch (err) {
+          next(err);
         }
       });
   } catch (err) {
