@@ -8,6 +8,7 @@ const AuthContext = React.createContext();
 
 function AuthProvider({ children }) {
   const [isLogin, setIsLogin] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const accessToken = localStorage.getItem("access-token");
 
   useEffect(()=>{
@@ -18,27 +19,40 @@ function AuthProvider({ children }) {
         access_token: accessToken
       }
     }).then(()=>{
+      setIsLoading(false);
       setIsLogin(true);
     }).catch(()=>{
       localStorage.clear();
+      setIsLoading(false);
       setIsLogin(false);
     });
   }, [accessToken]);
 
 
-  return <AuthContext.Provider value={{ isLogin, setIsLogin }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ isLogin, setIsLogin, isLoading, setIsLoading }}>{children}</AuthContext.Provider>;
 }
 
 function ProtectedRoute() {
-  const { isLogin } = useContext(AuthContext);
+  const { isLogin, isLoading } = useContext(AuthContext);
   const location = useLocation();
 
-  if (!isLogin && location.pathname === "/dashboard") {
-    return <Navigate to="/login" replace />; 
-  }
-
-  if (isLogin && location.pathname !== "/dashboard") {
-    return <Navigate to="/dashboard" replace />; 
+  if (isLoading) {
+    return <h1 style={{ 
+      height: "100vh",
+      display: "flex", 
+      justifyContent: "center", 
+      alignItems: "center" }}
+    >
+        Fetching...
+    </h1>;
+  } else {
+    if (!isLogin && location.pathname === "/dashboard") {
+      return <Navigate to="/login" replace />; 
+    }
+  
+    if (isLogin && location.pathname !== "/dashboard") {
+      return <Navigate to="/dashboard" replace />; 
+    }
   }
 
   return <Outlet/>;
