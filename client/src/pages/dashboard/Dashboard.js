@@ -45,9 +45,12 @@ export default function Dashboard() {
                   return (
                     <BoardCard 
                       key={idx} 
+                      id={el.board_id}
                       title={el.name}
                       description={el.description}
                       date={el.created_at}
+                      userId= {el.user_id}
+                      ownerId = {el.owner_id} 
                     />
                   );
                 })

@@ -1,9 +1,8 @@
 import axios from "axios";
 import { baseUrl } from "../../constants/url";
-import { SET_BOARDS, ADD_BOARD } from "./actionType";
+import { SET_BOARDS, ADD_BOARD, DELETE_BOARD } from "./actionType";
 
 function SetBoards(data) {
-  console.log(data);
   return {
     type: SET_BOARDS,
     payload: data
@@ -17,6 +16,12 @@ function AddBoard(data) {
   };
 }
 
+function DeleteBoard(id) {
+  return {
+    type: DELETE_BOARD,
+    payload: id
+  };
+}
 
 const accessToken = localStorage.getItem("access-token");
 
@@ -66,5 +71,25 @@ export function addBoard(data) {
     }).catch(err=>{
       console.log(err.response);
     });
+  };
+}
+
+export function deleteBoard(id) {
+  return (dispatch)=>{
+    axios({
+      method: "delete",
+      url: `${baseUrl}/boards/${id}`,
+      headers: {
+        access_token: accessToken
+      }
+    }).then(res=>{
+      const { data } = res.data;
+      console.log(data);
+      dispatch(DeleteBoard({
+        id: data.id
+      }));
+    }).catch(err=>{
+      console.log(err.response);
+    });;
   };
 }

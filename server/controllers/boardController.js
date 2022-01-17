@@ -75,9 +75,60 @@ class BoardController {
     }
   }
 
-  static async deleteBoard(req, res, next) {}
+  static async deleteBoard(req, res, next) {
+    const id = Number(req.params.id);
+    const ownerId = req.user.id;
 
-  static async updateBoard(req, res, next) {}
+    const client = await pool.connect();
+    
+    try {
+      await client.query("BEGIN");
+
+      const board = await client.query("SELECT * FROM boards WHERE id = $1", [id]);
+
+      if (board.rows[0].owner_id !== ownerId) {
+        throw {
+          status: 400,
+          message: "Not authorized"
+        };
+      }
+
+
+      await client.query("DELETE FROM members WHERE board_id = $1", [id]);
+      await client.query("DELETE FROM boards WHERE id = $1", [id]);
+      // await client.query("DELETE FROM groups WHERE board_id = $1", [id]);
+
+      client.query("COMMIT");
+
+      res.status(200).json({
+        status: 200,
+        data: {
+          id: id
+        }
+      });
+
+    } catch (err) {
+      await client.query("ROLLBACK");
+      next(err);
+    }
+  }
+
+  static async updateBoard(req, res, next) {
+    const id = Number(req.params.id);
+    const { name, description } = req.body;
+
+    const client = await pool.connect();
+    
+    try {
+      await client.query("BEGIN");
+
+      client.query("COMMIT");
+
+    } catch (err) {
+      await client.query("ROLLBACK");
+      next();
+    }
+  }
 }
 
 module.exports = { BoardController };

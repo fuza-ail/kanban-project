@@ -1,8 +1,8 @@
 import { 
   SET_BOARDS,
   ADD_BOARD,
+  DELETE_BOARD,
   // EDIT_BOARD,
-  // DELETE_BOARD
 } from "../action/actionType";
 
 const initialState = {
@@ -21,11 +21,14 @@ export default function boardReducer(state=initialState, action) {
           isError: action.payload.isError,
         };
       case ADD_BOARD:
-        console.log("ss", action.payload.board);
-        console.log(state.boards);
         return {
           ...state,
           boards: state.boards.concat(action.payload.board)
+        };
+      case DELETE_BOARD:
+        return {
+          ...state,
+          boards: state.boards.filter(board=> board.board_id !== action.payload.id)
         };
       default:
         return {
