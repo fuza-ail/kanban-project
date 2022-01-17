@@ -1,0 +1,10 @@
+.taskItem{
+  background-color: white;
+  padding: 0.4rem;
+  border-radius:4px;
+}
+
+.taskItem .date{
+  color: rgb(172, 172, 172);
+  font-size: 0.8rem;
+}

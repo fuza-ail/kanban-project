@@ -7,8 +7,8 @@ class GroupController {
     try {
       const group = await pool.query(`
         SELECT 
-        g.id,
         g.board_id,
+        g.id as group_id, 
         g.status_name,
         g.color,
         g.created_at,
@@ -17,7 +17,9 @@ class GroupController {
           'title',
           t.title,
           'description',
-          t.description
+          t.description,
+          'created_at',
+          t.created_at
         )) as tasks
         FROM groups as g
         JOIN tasks as t

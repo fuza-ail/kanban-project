@@ -1,0 +1,32 @@
+.groupContainer{
+  background-color: rgb(231, 231, 231);
+  padding: 0.6rem;
+  width: 20rem;
+  border-radius: 4px;
+  box-shadow: 1px 1px 1px rgba(128, 128, 128, 0.301)
+}
+
+
+.groupContainer-task{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.groupContainer-task h3 {
+  align-self: center;
+  margin-bottom: 0.4rem;
+}
+
+.groupContainer-task .header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.groupContainer-form{
+  display:flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}

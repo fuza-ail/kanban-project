@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams, useLocation } from "react-router-dom";
 
 import BoardHeader from "../../components/boardHeader/BoardHeader";
+import GroupContainer from "../../components/groupContainer/GroupContainer";
 
 import { getGroups } from "../../store/action/groupAction";
 
@@ -17,7 +18,7 @@ export default function Board() {
 
   useEffect(()=>{
     dispatch(getGroups(Number(param.boardId)));
-    // console.log(groups, members);
+    console.log(groups);
   }, []);
 
   if (isError) {
@@ -29,7 +30,23 @@ export default function Board() {
       <div className="board-container">
         <h1>{title.toUpperCase()} BOARD</h1>
         <BoardHeader isLoading={isLoading} members={members} boardId={param.boardId}/>
+
         <hr />
+
+        {isLoading?
+          <h3>Loading...</h3>:
+          <div className="group-section">
+            {groups.map((el, idx)=>{
+              return (
+                <GroupContainer 
+                  key={idx} 
+                  statusName={el.status_name} 
+                  tasks={el.tasks} 
+                  groupId={el.group_id} 
+                />
+              );
+            })}
+          </div>}
       </div>
     </div>
   );
