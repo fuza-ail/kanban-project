@@ -1,9 +1,58 @@
 const pool = require("../config/db");
 
 class GroupController {
-  static async getGroups(req, res, next) {}
+  static async getGroups(req, res, next) {
+    const { boardId } = req.params;
 
-  static async createGroup(req, res, next) {}
+    try {
+      const group = await pool.query(`
+        SELECT 
+        g.id,
+        g.board_id,
+        g.status_name,
+        g.color,
+        g.created_at,
+        g.updated_at,
+        jsonb_agg(jsonb_build_object(
+          'title',
+          t.title,
+          'description',
+          t.description
+        )) as tasks
+        FROM groups as g
+        JOIN tasks as t
+        ON t.group_id = g.id
+        WHERE g.board_id = $1
+        GROUP BY g.id
+      `, [boardId]);
+
+      console.log(group);
+      res.status(200).json({
+        status: 200,
+        data: group.rows
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async createGroup(req, res, next) {
+    const { board_id, status_name, color } = req.body;
+
+    try {
+      const group = await pool.query("INSERT INTO groups (board_id,status_name,color) values($1,$2,$3) RETURNING *", [board_id, status_name, color]);
+
+      // const group = await pool.query("SELECT id,board_id,status_name,color,created_at,updated_at FROM groups WHERE id = $1",[groupId]) 
+
+      res.status(201).json({
+        status: 201,
+        data: group.rows[0]
+      });
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
 
   static async updateGroup(req, res, next) {}
 

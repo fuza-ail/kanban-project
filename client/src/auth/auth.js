@@ -50,7 +50,7 @@ function ProtectedRoute() {
       return <Navigate to="/login" replace />; 
     }
   
-    if (isLogin && location.pathname !== "/dashboard") {
+    if (isLogin && (location.pathname === "/" || location.pathname === "/login")) {
       return <Navigate to="/dashboard" replace />; 
     }
   }

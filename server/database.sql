@@ -38,10 +38,8 @@ CREATE TABLE "tasks" (
   "id" int SERIAL PRIMARY KEY,
   "group_id" int,
   "user_id" int,
-  "status" varchar(100),
   "title" varchar(100),
   "description" text,
-  "due_date" timestamp DEFAULT CURRENT_TIMESTAMP,
   "created_at" timestamp DEFAULT CURRENT_TIMESTAMP,
   "updated_at" timestamp DEFAULT CURRENT_TIMESTAMP
 );

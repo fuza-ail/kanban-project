@@ -1,4 +1,5 @@
 function errorHandler(err, req, res, next) {
+  console.log(err);
   switch (err.constraint) {
       case "users_email_key":
         res.status(400).json({
