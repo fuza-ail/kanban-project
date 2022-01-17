@@ -1,0 +1,28 @@
+.board{
+  padding:0 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.board-container{
+  width:100rem;
+}
+
+.board-container h1{
+  margin-top:2rem
+}
+
+.board-container hr{
+  margin: 0.5rem auto;
+  border: 1.5px solid rgba(128, 128, 128, 0.301);
+}
+
+
+@media only screen and (max-width: 600px){
+  .board-container h1{
+    font-size: 1.2rem;
+    margin: 1rem auto;
+  }
+}
+

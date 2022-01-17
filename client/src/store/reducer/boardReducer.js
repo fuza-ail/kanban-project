@@ -2,7 +2,7 @@ import {
   SET_BOARDS,
   ADD_BOARD,
   DELETE_BOARD,
-  // EDIT_BOARD,
+  EDIT_BOARD,
 } from "../action/actionType";
 
 const initialState = {

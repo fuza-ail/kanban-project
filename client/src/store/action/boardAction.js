@@ -84,7 +84,7 @@ export function deleteBoard(id) {
       }
     }).then(res=>{
       const { data } = res.data;
-      console.log(data);
+
       dispatch(DeleteBoard({
         id: data.id
       }));

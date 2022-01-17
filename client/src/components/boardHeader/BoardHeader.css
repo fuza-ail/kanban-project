@@ -1,0 +1,28 @@
+.boardHeader{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.boardHeader input{
+  width: 14rem;
+}
+
+.boardHeader-invite .back{
+  margin-right: 2rem;
+}
+
+.boardHeader .boardHeader-member{
+  padding: 1rem 0;
+}
+
+@media only screen and (max-width: 600px){
+  .boardHeader-invite .back{
+    margin-right: 0.5rem;
+  }
+
+  .boardHeader input{
+    width: 12rem;
+  }
+}

@@ -21,7 +21,9 @@ class MemberController {
           res.status(201).json({
             status: 201,
             data: {
-              email: user.rows[0].email
+              email: user.rows[0].email,
+              board_id: boardId,
+              user_id: user.rows[0].id
             }
           });
         }

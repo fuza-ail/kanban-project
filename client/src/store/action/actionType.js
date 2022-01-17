@@ -4,6 +4,7 @@ export const EDIT_BOARD = "EDIT_BOARD";
 export const DELETE_BOARD = "DELETE_BOARD";
 
 export const SET_GROUPS = "SET_GROUPS";
-export const ADD_GROUPS = "ADD_GROUPS";
-export const DELETE_GROUPS = "DELETE_GROUPS";
+export const ADD_GROUP = "ADD_GROUP";
+export const DELETE_GROUP = "DELETE_GROUP";
 export const EDIT_GROUP = "EDIT_GROUP";
+export const ADD_MEMBER = "ADD_MEMBER";

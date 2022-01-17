@@ -26,10 +26,23 @@ class GroupController {
         GROUP BY g.id
       `, [boardId]);
 
-      console.log(group);
+      const member = await pool.query(`
+        SELECT
+        m.user_id,
+        m.board_id,
+        u.email
+        FROM members as m
+        JOIN users as u
+        ON u.id = m.user_id
+        WHERE m.board_id = $1
+      `, [boardId]);
+
       res.status(200).json({
         status: 200,
-        data: group.rows
+        data: {
+          groups: group.rows,
+          members: member.rows
+        }
       });
     } catch (err) {
       next(err);

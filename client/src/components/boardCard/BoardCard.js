@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, message } from "antd";
+import { Button, message, Popconfirm } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,7 @@ import "./BoardCard.css";
 export default function BoardCard(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [visible, setVisible] = React.useState(false);
 
   function removeBoard(e, id) {
     e.stopPropagation();
@@ -21,9 +22,24 @@ export default function BoardCard(props) {
     }
   }
 
-  function navigateBoard(id) {
-    navigate(`/dashboard/${id}`);
+  function editBoard(e) {
+    e.stopPropagation();
+    message.warn("Sorry, this feature is still under development");
   }
+
+  function navigateBoard(id) {
+    navigate(`/dashboard/${id}`, { state: props.title });
+  }
+
+  const handleCancel = (e) => {
+    e.stopPropagation();
+    setVisible(false);
+  };
+
+  const showPopconfirm = (e) => {
+    e.stopPropagation();
+    setVisible(true);
+  };
 
   return (
     <div className="boardCard" onClick={()=>{navigateBoard(props.id);}}>
@@ -36,14 +52,24 @@ export default function BoardCard(props) {
           type="primary"
           icon={<EditOutlined />}
           size="small"
+          onClick={(e)=>{editBoard(e);}}
         ></Button>
+
+        <Popconfirm
+          title="Are you sure "
+          visible={visible}
+          onConfirm={(e)=>{removeBoard(e, props.id);}}
+          onCancel={(e)=>handleCancel(e)}
+        >
+          <Button
+            type="danger"
+            icon={<DeleteOutlined />}
+            size="small"
+            onClick={(e)=>showPopconfirm(e)}
+          ></Button>
+        </Popconfirm>
         
-        <Button
-          type="danger"
-          icon={<DeleteOutlined />}
-          size="small"
-          onClick={(e)=>{removeBoard(e, props.id);}}
-        ></Button>
+        
 
         <p>{props.userId === props.ownerId ? "Owner": "Member"}</p>
       </div>
