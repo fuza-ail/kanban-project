@@ -21,8 +21,12 @@ export default function Board() {
     console.log(groups);
   }, []);
 
+  function refresh() {
+    window.location.reload();
+  }
+
   if (isError) {
-    return <h4>Error: something went wrong</h4>;
+    return <h3>Error: something went wrong &nbsp;<span style={{ cursor: "pointer", color: "blue" }} onClick={refresh}>Refresh</span></h3>;
   }
 
   return (
