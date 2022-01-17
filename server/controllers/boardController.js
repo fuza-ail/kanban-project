@@ -11,7 +11,8 @@ class BoardController {
       b.owner_id,
       b.id as board_id, 
       b.name,
-      b.description
+      b.description,
+      b.created_at
       FROM members as m
       JOIN boards as b 
       ON b.id = m.board_id
@@ -46,13 +47,27 @@ class BoardController {
       const insertMember = "INSERT INTO members (user_id,board_id) values($1,$2)";
       await client.query(insertMember, [ownerId, boardRes.rows[0].id]);
 
+      const selectBoard = `
+      SELECT 
+      m.user_id as user_id,
+      b.owner_id,
+      b.id as board_id, 
+      b.name,
+      b.description,
+      b.created_at
+      FROM members as m
+      JOIN boards as b 
+      ON b.id = m.board_id
+      WHERE b.id = $1
+      `;
+
+      const board = await client.query(selectBoard, [boardRes.rows[0].id ]);
+      
       client.query("COMMIT");
 
       res.status(201).json({
         status: 201,
-        data: {
-          id: boardRes.rows[0].id 
-        }
+        data: board.rows[0]
       });
     } catch (err) {
       await client.query("ROLLBACK");

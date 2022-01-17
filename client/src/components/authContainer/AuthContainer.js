@@ -28,7 +28,6 @@ export default function AuthContainer() {
     }
 
     setIsLoading(true);
-    console.log(authType);
 
     axios({
       method: "post",
