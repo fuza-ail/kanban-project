@@ -13,16 +13,20 @@ class GroupController {
         g.color,
         g.created_at,
         g.updated_at,
-        jsonb_agg(jsonb_build_object(
-          'title',
-          t.title,
-          'description',
-          t.description,
-          'created_at',
-          t.created_at
-        )) as tasks
+        COALESCE(
+          jsonb_agg(jsonb_build_object(
+            'id',
+            t.id,
+            'title',
+            t.title,
+            'description',
+            t.description,
+            'created_at',
+            t.created_at
+          ))FILTER (WHERE t.title IS NOT NULL)
+          ,'[]') as tasks
         FROM groups as g
-        JOIN tasks as t
+        LEFT JOIN tasks as t
         ON t.group_id = g.id
         WHERE g.board_id = $1
         GROUP BY g.id
@@ -69,9 +73,31 @@ class GroupController {
     }
   }
 
+  static async deleteGroup(req, res, next) {
+    const { groupId } = req.params;
+    console.log(groupId);
+    const client = await pool.connect();
+    try {
+      await client.query("BEGIN");
+      await client.query("DELETE FROM tasks WHERE group_id = $1", [groupId]);
+      await client.query("DELETE FROM groups where id = $1", [groupId]);
+      
+      client.query("COMMIT");
+
+      res.status(200).json({
+        status: 201,
+        data: {
+          group_id: groupId
+        }
+      });
+    } catch (err) {
+      await client.query("ROLLBACK");
+      next(err);
+    }
+  }
+
   static async updateGroup(req, res, next) {}
 
-  static async deleteGroup(req, res, next) {}
 }
 
 module.exports = { GroupController };

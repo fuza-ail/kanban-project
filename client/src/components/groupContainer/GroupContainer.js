@@ -23,8 +23,7 @@ export default function GroupContainer(props) {
 
   function handleTitle(e) {
     setTitle(e.target.value);
-    console.log(title);
-    console.log(props.groupId);
+
   }
 
   function handleDescription(e) {
@@ -71,7 +70,7 @@ export default function GroupContainer(props) {
       <div className="groupContainer-task">
         <div className="header">
           <h3>{props.statusName}</h3>
-          <Button icon={<DeleteOutlined />} />
+          <Button icon={<DeleteOutlined />} type="danger" />
         </div>
 
         {props.tasks.map((el, idx)=>{

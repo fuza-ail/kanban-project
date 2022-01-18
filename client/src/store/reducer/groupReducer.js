@@ -31,13 +31,15 @@ export default function groupReducer(state=initialState, action) {
         const groups = JSON.parse(JSON.stringify(state.groups));
         const { task, group_id } = action.payload;
         
-        const groupIndex = groups.findIndex(el=>el.group_id = group_id);
-        const group = groups.find(el=>el.group_id = group_id);
+        const groupIndex = groups.findIndex(el=>el.group_id === group_id);
+        const group = groups.find(el=>el.group_id === group_id);
         const tasks = [...group.tasks];
         
         tasks.push(task);
         group.tasks = tasks;
         groups[groupIndex] = group;
+
+
 
         return {
           ...state,

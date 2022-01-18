@@ -9,8 +9,15 @@
   width:100rem;
 }
 
-.board-container h1{
-  margin-top:2rem
+.board-container .head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top:1rem;
+}
+
+.head .head-add{
+  display: flex;
 }
 
 .board-container hr{

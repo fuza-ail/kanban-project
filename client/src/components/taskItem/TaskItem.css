@@ -4,6 +4,13 @@
   border-radius:4px;
 }
 
+.taskItem-footer{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
 .taskItem .date{
   color: rgb(172, 172, 172);
   font-size: 0.8rem;

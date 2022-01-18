@@ -22,7 +22,12 @@ export default function Dashboard() {
   }
 
   if (isError) {
-    return <h3>Error: something went wrong &nbsp;<span style={{ cursor: "pointer", color: "blue" }} onClick={refresh}>Refresh</span></h3>;
+    return <h3 style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "2rem"
+    }}>Error: something went wrong &nbsp;<span style={{ cursor: "pointer", color: "blue" }} onClick={refresh}>Refresh</span></h3>;
   }
 
   return (
