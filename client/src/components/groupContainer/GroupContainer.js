@@ -25,25 +25,27 @@ export default function GroupContainer(props) {
   const [{ isOver }, drop] = useDrop({
     accept: ItemTypes.CARD,
     drop: (item, monitor)=>{
-      axios({
-        method: "put",
-        url: `${baseUrl}/tasks/${item.task.id}`,
-        data: {
-          group_id: props.groupId
-        },
-        headers: {
-          access_token: accessToken
-        }
-      }).then(()=>{
+      if (item.groupId !== props.groupId) {
+        axios({
+          method: "put",
+          url: `${baseUrl}/tasks/${item.task.id}`,
+          data: {
+            group_id: props.groupId
+          },
+          headers: {
+            access_token: accessToken
+          }
+        }).then(()=>{
         // const { data } = res.data;
-        dispatch(UpdateTask({
-          originGroupId: item.groupId,
-          destinationGroupId: props.groupId,
-          task: item.task
-        }));
-      }).catch(err=>{
-        console.log(err.response);
-      });
+          dispatch(UpdateTask({
+            originGroupId: item.groupId,
+            destinationGroupId: props.groupId,
+            task: item.task
+          }));
+        }).catch(err=>{
+          console.log(err.response);
+        });
+      }
       
     },
     collect: monitor=>({

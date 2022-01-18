@@ -61,9 +61,10 @@ export function UpdateTask(data) {
   };
 }
 
-const accessToken = localStorage.getItem("access-token");
 
 export function getGroups(groupId) {
+  const accessToken = localStorage.getItem("access-token");
+  
   return (dispatch)=>{
     dispatch(SetGroups({
       isLoading: true,
