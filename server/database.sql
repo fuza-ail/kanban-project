@@ -1,7 +1,7 @@
 CREATE DATABASE kanban;
 
 CREATE TABLE "users" (
-  "id" INT SERIAL PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "email" varchar(100) UNIQUE NOT NULL,
   "password" varchar(250) NOT NULL,
   "created_at" timestamp DEFAULT CURRENT_TIMESTAMP,
@@ -9,7 +9,7 @@ CREATE TABLE "users" (
 );
 
 CREATE TABLE "boards" (
-  "id" int SERIAL PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "name" varchar(100) NOT NULL,
   "owner_id" int NOT NULL,
   "description" text,
@@ -18,7 +18,7 @@ CREATE TABLE "boards" (
 );
 
 CREATE TABLE "members" (
-  "id" int SERIAL PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "user_id" int,
   "board_id" int,
   "created_at" timestamp DEFAULT CURRENT_TIMESTAMP,
@@ -26,7 +26,7 @@ CREATE TABLE "members" (
 );
 
 CREATE TABLE "groups" (
-  "id" int SERIAL PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "board_id" int,
   "status_name" varchar(100),
   "color" varchar(50),
@@ -35,7 +35,7 @@ CREATE TABLE "groups" (
 );
 
 CREATE TABLE "tasks" (
-  "id" int SERIAL PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "group_id" int,
   "user_id" int,
   "title" varchar(100),
