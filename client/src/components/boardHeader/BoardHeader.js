@@ -11,6 +11,7 @@ import { AddMember } from "../../store/action/groupAction";
 
 export default function BoardHeader(props) {
   const [email, setEmail] = useState("");
+  const [loading, setLoading]= useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -21,6 +22,7 @@ export default function BoardHeader(props) {
   }
 
   function addMoreMember() {
+    setLoading(true);
     axios({
       method: "post",
       url: `${baseUrl}/members`,
@@ -33,12 +35,13 @@ export default function BoardHeader(props) {
       }
     }).then(res=>{
       const { data } = res.data;
-
+      setLoading(false);
       dispatch(AddMember({
         member: data,
       }));
     }).catch(err=>{
       const { data } = err.response;
+      setLoading(false);
       message.error(data.message);
     });
   }
@@ -52,7 +55,7 @@ export default function BoardHeader(props) {
       <div className="boardHeader-invite">
         <Button onClick={back} icon={<ArrowLeftOutlined />} shape="circle" className="back"/>
         <Input placeholder="Email" onChange={handleEmail} />
-        <Button type="primary" onClick={addMoreMember}>Invite</Button>
+        <Button type="primary" onClick={addMoreMember} loading={loading}>Invite</Button>
       </div>
 
       <div className='boardHeader-member'>
@@ -64,7 +67,7 @@ export default function BoardHeader(props) {
                 <Tooltip key={idx} title={el.email} placement="top">
                   <Avatar
                     style={{
-                      backgroundColor: "#87d068",
+                      backgroundColor: "#86939E",
                     }}
                     icon={<UserOutlined />}
                   />

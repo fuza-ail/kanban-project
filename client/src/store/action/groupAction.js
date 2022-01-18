@@ -1,6 +1,13 @@
 import axios from "axios";
 import { baseUrl } from "../../constants/url";
-import { SET_GROUPS, ADD_GROUPS, DELETE_GROUP, EDIT_GROUP, ADD_MEMBER } from "./actionType";
+import { 
+  SET_GROUPS, 
+  ADD_GROUPS, 
+  DELETE_GROUP, 
+  EDIT_GROUP, 
+  ADD_MEMBER, 
+  ADD_TASK 
+} from "./actionType";
 
 function SetGroups(data) {
   return {
@@ -12,6 +19,13 @@ function SetGroups(data) {
 export function AddMember(data) {
   return {
     type: ADD_MEMBER,
+    payload: data
+  };
+}
+
+export function AddTask(data) {
+  return {
+    type: ADD_TASK,
     payload: data
   };
 }

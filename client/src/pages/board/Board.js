@@ -18,7 +18,6 @@ export default function Board() {
 
   useEffect(()=>{
     dispatch(getGroups(Number(param.boardId)));
-    console.log(groups);
   }, []);
 
   function refresh() {
