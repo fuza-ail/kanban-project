@@ -53,7 +53,6 @@ export default function groupReducer(state=initialState, action) {
         tasks.push(task);
         group.tasks = tasks;
         groups[groupIndex] = group;
-        console.log(groups);
         return {
           ...state,
           groups
