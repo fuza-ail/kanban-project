@@ -6,7 +6,8 @@ import {
   DELETE_GROUP, 
   // EDIT_GROUP, 
   ADD_MEMBER, 
-  ADD_TASK 
+  ADD_TASK,
+  DELETE_TASK 
 } from "./actionType";
 
 function SetGroups(data) {
@@ -41,6 +42,13 @@ export function AddMember(data) {
 export function AddTask(data) {
   return {
     type: ADD_TASK,
+    payload: data
+  };
+}
+
+export function DeleteTask(data) {
+  return {
+    type: DELETE_TASK,
     payload: data
   };
 }

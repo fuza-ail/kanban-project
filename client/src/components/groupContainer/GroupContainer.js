@@ -51,8 +51,10 @@ export default function GroupContainer(props) {
     }).then(res=>{
       const { data } = res.data;
       setLoading(false);
+      setIsAddShow(false);
       dispatch(AddTask({
         task: {
+          id: data.id,
           title: data.title,
           description: data.description,
           created_at: data.created_at
@@ -102,12 +104,12 @@ export default function GroupContainer(props) {
             title="Are you sure "
             visible={visible}
             onConfirm={removeGroup}
-            onCancel={(e)=>handleCancel(e)}
+            onCancel={handleCancel}
           >
             <Button 
               icon={<DeleteOutlined />} 
               type="danger" 
-              onClick={(e)=>showPopconfirm(e)}
+              onClick={showPopconfirm}
             />
           </Popconfirm>
         </div>
@@ -116,6 +118,7 @@ export default function GroupContainer(props) {
           return (
             <TaskItem 
               key={idx}
+              groupId = {props.groupId}
               taskId = {el.id}
               title={el.title} 
               description={el.description} 

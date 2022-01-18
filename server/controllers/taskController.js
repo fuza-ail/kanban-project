@@ -17,9 +17,35 @@ class TaskController {
     }
   }
 
+  static async deleteTask(req, res, next) {
+    const taskId = req.params.id;
+
+    try {
+      const task = await pool.query("SELECT id,title,group_id FROM tasks WHERE id = $1", [taskId]);
+
+      if (task.rows[0]) {
+        await pool.query("DELETE FROM tasks WHERE id = $1", [taskId]);
+
+        res.status(200).json({
+          status: 200,
+          data: {
+            task_id: task.rows[0].id,
+            group_id: task.rows[0].group_id
+          }
+        });
+      } else {
+        throw {
+          status: 404,
+          message: "Task not found"
+        };
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
   static async updateTask(req, res, next) {}
 
-  static async deleteTask(req, res, next) {}
 }
 
 module.exports = { TaskController };

@@ -75,7 +75,7 @@ class GroupController {
 
   static async deleteGroup(req, res, next) {
     const { groupId } = req.params;
-    console.log(groupId);
+
     const client = await pool.connect();
     try {
       await client.query("BEGIN");
