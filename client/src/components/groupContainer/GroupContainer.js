@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Input, Button, message } from "antd";
+import { Input, Button, message, Popconfirm } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 
 import TaskItem from  "../taskItem/taskItem";
-import { AddTask } from "../../store/action/groupAction";
+import { AddTask, DeleteGroup } from "../../store/action/groupAction";
 
 import "./GroupContainer.css";
 import { baseUrl } from "../../constants/url";
@@ -15,6 +15,7 @@ export default function GroupContainer(props) {
   const [loading, setLoading] = useState(false);
   const [description, setDescription] = useState("");
   const [isAddShow, setIsAddShow] = useState(false);
+  const [visible, setVisible] = useState(false);
   const { TextArea } = Input;
 
   const accessToken = localStorage.getItem("access-token");
@@ -65,18 +66,57 @@ export default function GroupContainer(props) {
     });
   }
 
+  const handleCancel = (e) => {
+    e.stopPropagation();
+    setVisible(false);
+  };
+
+  const showPopconfirm = (e) => {
+    e.stopPropagation();
+    setVisible(true);
+  };
+
+  function removeGroup(e) {
+    e.stopPropagation();
+    axios({
+      method: "delete",
+      url: `${baseUrl}/groups/${props.groupId}`,
+      headers: {
+        access_token: accessToken
+      }
+    }).then(res=>{
+      const { data } = res.data;
+      dispatch(DeleteGroup(data.group_id));
+    }).catch(err=>{
+      const { data } = err.response;
+      message.error(data.message);
+    });
+  }
+
   return (
     <div className="groupContainer">
       <div className="groupContainer-task">
         <div className="header">
           <h3>{props.statusName}</h3>
-          <Button icon={<DeleteOutlined />} type="danger" />
+          <Popconfirm
+            title="Are you sure "
+            visible={visible}
+            onConfirm={removeGroup}
+            onCancel={(e)=>handleCancel(e)}
+          >
+            <Button 
+              icon={<DeleteOutlined />} 
+              type="danger" 
+              onClick={(e)=>showPopconfirm(e)}
+            />
+          </Popconfirm>
         </div>
 
         {props.tasks.map((el, idx)=>{
           return (
             <TaskItem 
               key={idx}
+              taskId = {el.id}
               title={el.title} 
               description={el.description} 
               createdAt={el.created_at} />

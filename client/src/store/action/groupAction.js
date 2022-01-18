@@ -23,6 +23,14 @@ export function AddGroup(data) {
   };
 }
 
+export function DeleteGroup(id) {
+  return {
+    type: DELETE_GROUP,
+    payload: id
+  };
+
+}
+
 export function AddMember(data) {
   return {
     type: ADD_MEMBER,

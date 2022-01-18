@@ -1,4 +1,11 @@
-import { SET_GROUPS, ADD_GROUP, ADD_MEMBER, ADD_TASK, DELETE_GROUP, EDIT_GROUP } from "../action/actionType";
+import { 
+  SET_GROUPS, 
+  ADD_GROUP, 
+  ADD_MEMBER, 
+  ADD_TASK, 
+  DELETE_GROUP, 
+  // EDIT_GROUP 
+} from "../action/actionType";
 
 const initialState = {
   groups: [],
@@ -22,6 +29,12 @@ export default function groupReducer(state=initialState, action) {
           ...state,
           groups: state.groups.concat(action.payload.group)
         };
+      case DELETE_GROUP:
+        const groupId = action.payload;
+        return {
+          ...state,
+          groups: state.groups.filter(group => group.group_id !== groupId)
+        };
       case ADD_MEMBER:
         return {
           ...state,
@@ -38,8 +51,6 @@ export default function groupReducer(state=initialState, action) {
         tasks.push(task);
         group.tasks = tasks;
         groups[groupIndex] = group;
-
-
 
         return {
           ...state,

@@ -87,7 +87,7 @@ class GroupController {
       res.status(200).json({
         status: 201,
         data: {
-          group_id: groupId
+          group_id: Number(groupId)
         }
       });
     } catch (err) {
