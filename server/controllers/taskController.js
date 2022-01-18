@@ -53,8 +53,6 @@ class TaskController {
         "UPDATE tasks SET group_id = $1 WHERE id=$2 RETURNING *", 
         [group_id, taskId]
       );
-
-      console.log(task.rows[0]);
       res.status(200).json({
         status: 200,
         data: task.rows[0]

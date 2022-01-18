@@ -23,9 +23,10 @@ function DeleteBoard(id) {
   };
 }
 
-const accessToken = localStorage.getItem("access-token");
 
 export function getBoards() {
+  const accessToken = localStorage.getItem("access-token");
+
   return (dispatch) =>{
     dispatch(SetBoards({
       isLoading: true,
@@ -57,6 +58,7 @@ export function getBoards() {
 }
 
 export function addBoard(data) {
+  const accessToken = localStorage.getItem("access-token");
   return (dispatch)=>{
     axios({
       method: "post",
@@ -77,6 +79,7 @@ export function addBoard(data) {
 }
 
 export function deleteBoard(id) {
+  const accessToken = localStorage.getItem("access-token");
   return (dispatch)=>{
     axios({
       method: "delete",

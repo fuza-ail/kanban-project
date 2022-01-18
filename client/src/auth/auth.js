@@ -9,9 +9,10 @@ const AuthContext = React.createContext();
 function AuthProvider({ children }) {
   const [isLogin, setIsLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const accessToken = localStorage.getItem("access-token");
-
+  
   useEffect(()=>{
+    const accessToken = localStorage.getItem("access-token");
+    
     axios({
       method: "get",
       url: `${baseUrl}/auth`,
@@ -26,7 +27,7 @@ function AuthProvider({ children }) {
       setIsLoading(false);
       setIsLogin(false);
     });
-  }, [accessToken]);
+  }, []);
 
 
   return <AuthContext.Provider value={{ isLogin, setIsLogin, isLoading, setIsLoading }}>{children}</AuthContext.Provider>;

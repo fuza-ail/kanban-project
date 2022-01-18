@@ -39,11 +39,11 @@ export default function AuthContainer() {
     })
       .then(res=>{
         const { data } = res.data;
-
-        setIsLoading(false);
-        setIsLogin(true);
+        
         localStorage.setItem("access-token", data.access_token);
         localStorage.setItem("email", data.email);
+        setIsLoading(false);
+        setIsLogin(true);
         navigate("/dashboard");
       }).catch(err=>{
         const { data } = err.response;
