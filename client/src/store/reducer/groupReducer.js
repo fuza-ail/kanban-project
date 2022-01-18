@@ -4,7 +4,8 @@ import {
   ADD_MEMBER, 
   ADD_TASK, 
   DELETE_GROUP, 
-  DELETE_TASK, 
+  DELETE_TASK,
+  UPDATE_TASK, 
   // EDIT_GROUP 
 } from "../action/actionType";
 
@@ -69,10 +70,36 @@ export default function groupReducer(state=initialState, action) {
 
         findGroup.tasks = listTask.filter(el=>el.id !== taskId );
         groupsCopy[findGroupIndex] = findGroup;
-
+        
         return {
           ...state,
           groups: groupsCopy
+        };
+      case UPDATE_TASK:
+        const currentTask = action.payload.task;
+        // console.log(currentTask);
+        const originGroupId = action.payload.originGroupId;
+        const destinationGroupId = action.payload.destinationGroupId;
+
+        const listGroup = JSON.parse(JSON.stringify(state.groups));
+
+        const indexGroupOrigin = listGroup.findIndex(el=>el.group_id === originGroupId);
+        const indexGroupDest = listGroup.findIndex(el=>el.group_id === destinationGroupId);
+
+        const groupOrigin = listGroup.find(el=>el.group_id === originGroupId);
+        const groupDestination = listGroup.find(el=>el.group_id === destinationGroupId);
+
+        groupDestination.tasks.push(currentTask);
+        groupOrigin.tasks = groupOrigin.tasks.filter(el=>el.id !==currentTask.id);
+        // console.log(currentTask);
+        // console.log(groupOrigin);
+
+        listGroup[indexGroupOrigin]= groupOrigin;
+        listGroup[indexGroupDest] = groupDestination;
+
+        return {
+          ...state,
+          groups: listGroup
         };
       default:
         return {

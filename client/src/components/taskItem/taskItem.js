@@ -2,20 +2,32 @@ import React, { useState } from "react";
 import {  Button, message, Popconfirm } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
+import { useDrag } from "react-dnd";
 
 import "./TaskItem.css";
 import {  DeleteTask } from "../../store/action/groupAction";
 import axios from "axios";
 import { baseUrl } from "../../constants/url";
 
+import { ItemTypes } from "../../constants/item";
+
 export default function TaskItem(props) {
   const [visible, setVisible] = useState(false);
+
+  const [{ isDragging }, drag] = useDrag({ 
+    item: { 
+      groupId: props.groupId,
+      task: props.task
+    },
+    type: ItemTypes.CARD,
+    collect: (monitor)=>({
+      isDragging: !!monitor.isDragging()
+    })
+  });
 
   const accessToken = localStorage.getItem("access-token");
 
   const dispatch = useDispatch();
-
-  // console.log(props);
 
   function removeTask(e) {
     e.stopPropagation();
@@ -51,7 +63,11 @@ export default function TaskItem(props) {
   };
 
   return (
-    <div className="taskItem">
+    <div 
+      className="taskItem" 
+      ref={drag} 
+      style={{ backgroundColor: isDragging ? "#b8b8b8":"white" }}
+    >
       <h4>{props.title}</h4>
       <p>{props.description}</p>
       <div className="taskItem-footer">

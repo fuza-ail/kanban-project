@@ -7,7 +7,8 @@ import {
   // EDIT_GROUP, 
   ADD_MEMBER, 
   ADD_TASK,
-  DELETE_TASK 
+  DELETE_TASK, 
+  UPDATE_TASK
 } from "./actionType";
 
 function SetGroups(data) {
@@ -53,6 +54,13 @@ export function DeleteTask(data) {
   };
 }
 
+export function UpdateTask(data) {
+  return {
+    type: UPDATE_TASK,
+    payload: data
+  };
+}
+
 const accessToken = localStorage.getItem("access-token");
 
 export function getGroups(groupId) {
@@ -80,8 +88,6 @@ export function getGroups(groupId) {
         isLoading: false,
         isError: true,
       }));
-
-      console.log(err.response);
     });
   };
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { Button, Input, message } from "antd";
 
 import BoardHeader from "../../components/boardHeader/BoardHeader";
@@ -18,7 +18,7 @@ export default function Board() {
   const param = useParams();
   const title = useLocation().state;
   const { groups, members, isLoading, isError } = useSelector((state)=>state.groupReducer);
-  
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const accessToken = localStorage.getItem("access-token");
@@ -28,6 +28,7 @@ export default function Board() {
   }, [dispatch, param.boardId]);
 
   function refresh() {
+    navigate("/dashboard");
     window.location.reload();
   }
 

@@ -28,7 +28,8 @@ const accessToken = localStorage.getItem("access-token");
 export function getBoards() {
   return (dispatch) =>{
     dispatch(SetBoards({
-      isLoading: true
+      isLoading: true,
+      isError: false
     }));
     
     axios({
@@ -42,7 +43,8 @@ export function getBoards() {
 
       dispatch(SetBoards({
         boards: data,
-        isLoading: false
+        isLoading: false,
+        isError: false
       }));
     }).catch(err=>{
       dispatch(SetBoards({
