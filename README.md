@@ -1,9 +1,8 @@
 # Kanban Project
 <img src="./images/fuza.gif" />
 
-## Deployment
-https://kanban-fuzail.web.app/  
-
+## Deployment  
+https://kanban.fuzailmuhammad.com/
 ## Libraries
 **Frontend:**
 - react
